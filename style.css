@@ -1,0 +1,286 @@
+:root {
+    --background-color: #121212;
+    --surface-color: #1E1E1E;
+    --primary-color: #bb86fc;
+    --secondary-color: #03dac6;
+    --highlight-color: #2962ff; /* Blue for task indicator */
+    --on-surface-color: #FFFFFF;
+    --on-surface-secondary-color: #B0B0B0;
+    --border-color: #2c2c2c;
+}
+
+html {
+    height: 100%;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: var(--background-color);
+    color: var(--on-surface-color);
+    margin: 0;
+    height: 100%;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box;
+    overflow: hidden;
+}
+
+.agenda-container {
+    width: 100%;
+    max-width: 900px;
+    height: 95%;
+    max-height: 95vh;
+    background-color: var(--surface-color);
+    border-radius: 8px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    border: 1px solid var(--border-color);
+    display: flex;
+    flex-direction: column;
+}
+
+.agenda-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 25px;
+    background-color: var(--surface-color);
+    border-bottom: 1px solid var(--border-color);
+    flex-shrink: 0;
+}
+
+main {
+    flex-grow: 1;
+    overflow-y: auto;
+    height: 100%;
+}
+
+.header-left {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.agenda-header h2 {
+    margin: 0;
+    font-weight: 600;
+    font-size: 1.2rem;
+    color: var(--primary-color);
+    width: 220px;
+    text-align: center;
+}
+
+.header-right {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.agenda-header button {
+    background-color: #2a2a2a;
+    border: 1px solid #333;
+    color: var(--on-surface-color);
+    padding: 8px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+    transition: background-color 0.2s, border-color 0.2s;
+}
+
+.agenda-header button:hover {
+    background-color: #333;
+    border-color: #444;
+}
+
+.view-switcher {
+    display: flex;
+    background-color: #121212;
+    border-radius: 6px;
+    padding: 4px;
+}
+
+.view-switcher button {
+    background: transparent;
+    border: none;
+    padding: 6px 12px;
+}
+
+.view-switcher button.active {
+    background-color: var(--primary-color);
+    color: #000;
+}
+
+#export-btn {
+    background-color: var(--secondary-color);
+    color: #000;
+    border-color: var(--secondary-color);
+}
+
+/* --- Month View --- */
+.month-view {
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    box-sizing: border-box;
+}
+
+.month-grid-header {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 5px;
+    flex-shrink: 0;
+}
+
+.month-grid-days {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    grid-template-rows: repeat(6, 1fr); /* Force 6 rows to divide the space */
+    gap: 5px;
+    flex-grow: 1;
+}
+
+.weekday-header {
+    text-align: center;
+    font-weight: 600;
+    color: var(--on-surface-secondary-color);
+    padding-bottom: 10px;
+    font-size: 0.9rem;
+}
+
+.day-cell {
+    padding: 8px;
+    background-color: #2a2a2a;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    overflow: hidden;
+}
+
+.day-cell:hover {
+    background-color: #333;
+}
+
+.day-cell.not-current-month {
+    background-color: transparent;
+    cursor: default;
+}
+
+.day-cell .day-number {
+    font-weight: 500;
+    align-self: flex-start;
+    font-size: 0.9em;
+}
+
+.day-cell.today .day-number {
+    color: var(--secondary-color);
+    font-weight: bold;
+}
+
+.day-cell .task-indicator {
+    width: 20px;
+    height: 20px;
+    background-color: var(--highlight-color);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #fff;
+    align-self: flex-end;
+}
+
+/* --- Day View --- */
+.schedule-view {
+    display: grid;
+    grid-template-columns: 100px 1fr;
+}
+
+.time-slot { display: contents; }
+.hour-cell { padding: 20px 15px; text-align: right; font-weight: 500; border-right: 1px solid var(--border-color); border-top: 1px solid var(--border-color); font-size: 0.9rem; color: var(--on-surface-secondary-color); }
+.task-cell { border-top: 1px solid var(--border-color); }
+.task-input { width: 100%; height: 100%; border: none; padding: 20px; font-family: 'Inter', sans-serif; font-size: 1rem; resize: none; box-sizing: border-box; background-color: transparent; color: var(--on-surface-color); transition: background-color 0.2s; }
+.task-input:focus { outline: none; background-color: rgba(187, 134, 252, 0.1); }
+.time-slot.past .task-input { color: #666; text-decoration: line-through; }
+.time-slot.past .hour-cell { color: #555; }
+.time-slot.now .hour-cell { color: var(--secondary-color); font-weight: 600; }
+.time-slot.now .task-cell { border-left: 3px solid var(--secondary-color); }
+.time-slot.now .task-input { background-color: rgba(3, 218, 198, 0.05); }
+
+/* --- Util --- */
+.hidden {
+    display: none !important;
+}
+
+#save-indicator { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); background-color: var(--secondary-color); color: #000; padding: 10px 20px; border-radius: 6px; font-weight: 500; box-shadow: 0 4px 15px rgba(0,0,0,0.2); opacity: 0; visibility: hidden; transition: opacity 0.3s, visibility 0.3s; }
+#save-indicator.visible { opacity: 1; visibility: visible; }
+
+/* --- Responsive Design --- */
+@media (max-width: 768px) {
+    body {
+        padding: 0;
+        align-items: flex-start;
+    }
+    .agenda-container{
+        height: 100%;
+        max-height: 100%;
+        border-radius: 0;
+    }
+    .agenda-header {
+        flex-direction: column;
+        gap: 15px;
+        padding: 15px;
+    }
+    .day-cell .day-number {
+        font-size: 0.8em;
+    }
+    .day-cell .task-indicator {
+        width: 18px;
+        height: 18px;
+        font-size: 0.7rem;
+    }
+    .schedule-view {
+        grid-template-columns: 65px 1fr;
+    }
+    .hour-cell {
+        font-size: 0.8rem;
+        padding: 15px 5px;
+    }
+}
+
+@media (max-width: 480px) {
+    .agenda-header h2 {
+        font-size: 1rem;
+        width: auto;
+        flex-grow: 1;
+    }
+    .header-left {
+        width: 100%;
+        justify-content: space-between;
+    }
+    .header-right {
+        width: 100%;
+        justify-content: center;
+    }
+    .weekday-header {
+        font-size: 0.7rem;
+    }
+    .day-cell {
+        padding: 4px;
+    }
+    .day-cell .day-number {
+        font-size: 0.75rem;
+    }
+    .day-cell .task-indicator {
+        width: 16px;
+        height: 16px;
+        font-size: 0.65rem;
+    }
+}

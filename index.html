@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agenda Profesional</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div id="save-indicator" class="save-indicator">Guardado</div>
+    <div class="agenda-container">
+        <header class="agenda-header">
+            <div class="header-left">
+                <button id="prev-btn" title="Anterior">&lt;</button>
+                <h2 id="current-month-year"></h2>
+                <button id="next-btn" title="Siguiente">&gt;</button>
+            </div>
+            <div class="header-right">
+                <div id="view-switcher" class="view-switcher">
+                    <button id="month-view-btn" class="active">Mes</button>
+                    <button id="day-view-btn">Día</button>
+                </div>
+                <button id="export-btn">Exportar (.ics)</button>
+            </div>
+        </header>
+        <main>
+            <div id="month-view" class="month-view">
+                <div class="month-grid-header">
+                    <div class="weekday-header">Dom</div>
+                    <div class="weekday-header">Lun</div>
+                    <div class="weekday-header">Mar</div>
+                    <div class="weekday-header">Mié</div>
+                    <div class="weekday-header">Jue</div>
+                    <div class="weekday-header">Vie</div>
+                    <div class="weekday-header">Sáb</div>
+                </div>
+                <div id="month-grid-days" class="month-grid-days">
+                    <!-- Los días del mes se generarán aquí -->
+                </div>
+            </div>
+            <div id="schedule-view" class="schedule-view">
+                <!-- Las filas de horas se generarán aquí con JavaScript -->
+            </div>
+        </main>
+    </div>
+    <!-- Firebase SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore-compat.js"></script>
+    <script>
+      // Your web app's Firebase configuration
+      const firebaseConfig = {
+        apiKey: "AIzaSyDtQl7h46NIhqR11p2-FdzMupnm_uKbcVQ",
+        authDomain: "mi-agenda-compartida.firebaseapp.com",
+        projectId: "mi-agenda-compartida",
+        storageBucket: "mi-agenda-compartida.firebasestorage.app",
+        messagingSenderId: "398981877867",
+        appId: "1:398981877867:web:5e5483dd44d3ed9339a12e",
+        measurementId: "G-FRHWS93SEQ"
+      };
+
+      // Initialize Firebase
+      const app = firebase.initializeApp(firebaseConfig);
+      const db = firebase.firestore(); // Get a reference to the Firestore service
+    </script>
+    <script src="script.js"></script>
+</body>
+</html>
